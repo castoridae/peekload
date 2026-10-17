@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title data-i18n="optionsTitle">Peekload — settings</title>
+  <link rel="stylesheet" href="../shared/ui.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body class="preload">
+  <main class="op">
+    <header class="op-header">
+      <img src="../icons/icon48.png" width="40" height="40" alt="">
+      <div class="op-header-text">
+        <h1>Peekload</h1>
+        <p class="muted" data-i18n="optionsIntro">On selected sites, exports (JSON, CSV/TSV, XML, text) open in a preview instead of being saved to disk.</p>
+      </div>
+    </header>
+
+    <section class="card section" aria-labelledby="sites-title">
+      <div class="section-head">
+        <h2 id="sites-title" data-i18n="optionsSites">Sites</h2>
+        <p class="muted small" data-i18n="optionsSitesHelp">The easiest way to enable a site is the extension icon in the toolbar. If an export comes from another domain (e.g. api.example.com), add it here separately. An entry like *.example.com covers the domain and all its subdomains; an exact entry (e.g. app.example.com) takes precedence over it. Under each site, choose which formats to capture — new sites capture JSON only.</p>
+      </div>
+      <form class="add-form" id="add-form">
+        <label class="field-icon">
+          <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#globe"/></svg>
+          <input type="text" id="add-input" autocomplete="off" spellcheck="false"
+            placeholder="e.g. app.example.com or *.example.com" data-i18n-placeholder="optionsAddPlaceholder"
+            aria-label="e.g. app.example.com or *.example.com" data-i18n-aria-label="optionsAddPlaceholder">
+        </label>
+        <button type="submit" class="primary">
+          <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#plus"/></svg>
+          <span data-i18n="optionsAdd">Add</span>
+        </button>
+      </form>
+      <p class="form-error" id="add-error" role="alert"></p>
+      <p class="form-hint" id="add-hint" role="status" hidden></p>
+      <ul class="site-list" id="sites"></ul>
+    </section>
+
+    <section class="card section" aria-labelledby="behavior-title">
+      <div class="section-head">
+        <h2 id="behavior-title" data-i18n="optionsBehavior">Behavior</h2>
+      </div>
+      <div class="setting">
+        <div class="setting-text">
+          <label for="language" data-i18n="optionsLanguage">Language</label>
+          <p data-i18n="optionsLanguageHelp">Popup, settings and preview. The extension name and description on the extensions page follow the browser language.</p>
+        </div>
+        <select id="language"></select>
+      </div>
+      <div class="setting">
+        <div class="setting-text">
+          <label for="autoCopy" data-i18n="optionsAutoCopy">Copy to clipboard automatically</label>
+          <p data-i18n="optionsAutoCopyHelp">Right after the preview opens.</p>
+        </div>
+        <input type="checkbox" role="switch" class="switch" id="autoCopy">
+      </div>
+      <div class="setting">
+        <div class="setting-text">
+          <label for="openIn" data-i18n="optionsOpenIn">Open preview in</label>
+        </div>
+        <select id="openIn">
+          <option value="tab" data-i18n="optionsOpenInTab">a new tab</option>
+          <option value="window" data-i18n="optionsOpenInWindow">a new window</option>
+          <option value="popup" data-i18n="optionsOpenInPopup">a small window (popup)</option>
+        </select>
+      </div>
+      <div class="setting">
+        <div class="setting-text">
+          <label for="interceptServer" data-i18n="optionsInterceptServer">Also capture files downloaded from the server</label>
+          <p data-i18n="optionsInterceptServerHelp">When the server sends a file in one of the enabled formats as an attachment (Content-Disposition: attachment). The extension pauses the download and fetches the file again with your session. Doesn't work for exports that require a POST request.</p>
+        </div>
+        <input type="checkbox" role="switch" class="switch" id="interceptServer">
+      </div>
+    </section>
+
+    <section class="card section" aria-labelledby="copy-title">
+      <div class="section-head">
+        <h2 id="copy-title" data-i18n="optionsCopySection">Copying</h2>
+        <p class="muted small" data-i18n="optionsCopySectionHelp">What the Copy button puts on the clipboard for each format.</p>
+      </div>
+      <div id="copy-formats"></div>
+    </section>
+
+    <section class="card section" aria-labelledby="shortcut-title">
+      <div class="setting">
+        <div class="setting-text">
+          <h2 id="shortcut-title" data-i18n="optionsShortcut">Keyboard shortcut</h2>
+          <p data-i18n="optionsShortcutHelp">Opens the latest export from anywhere in the browser.</p>
+        </div>
+        <div class="row">
+          <span id="shortcut"></span>
+          <button type="button" id="shortcut-change" class="sm"><span data-i18n="optionsShortcutChange">Change</span></button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="op-footer">
+      <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#shield"/></svg>
+      <span data-i18n="optionsPrivacy">Everything stays in your browser — exports are never sent anywhere.</span>
+      <span class="op-version" id="version"></span>
+    </footer>
+  </main>
+  <div class="toast" id="saved" role="status" aria-live="polite"></div>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

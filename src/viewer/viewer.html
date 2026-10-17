@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title data-i18n="viewerTitleDefault">Export</title>
+  <link rel="stylesheet" href="../shared/ui.css">
+  <link rel="stylesheet" href="viewer.css">
+</head>
+<body class="preload">
+  <div class="vw-top">
+    <header class="vw-header">
+      <div class="vw-meta">
+        <button type="button" id="history-toggle" class="ghost icon-only" aria-pressed="false" title="Recent exports" aria-label="Recent exports" data-i18n-title="popupHistory" data-i18n-aria-label="popupHistory">
+          <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#clock"/></svg>
+        </button>
+        <span class="badge-fmt" id="format-badge" hidden></span>
+        <div class="vw-title-block">
+          <div class="title-row">
+            <h1 class="title" id="filename" title="Click to name this export" data-i18n-title="viewerRenameHint" data-i18n="viewerTitleDefault">Export</h1>
+            <input type="text" id="rename-input" class="rename" hidden aria-label="Export name" placeholder="Export name" data-i18n-aria-label="viewerRenamePlaceholder" data-i18n-placeholder="viewerRenamePlaceholder">
+            <button type="button" id="rename" class="ghost icon-only sm" title="Name this export" aria-label="Name this export" data-i18n-title="viewerRename" data-i18n-aria-label="viewerRename">
+              <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#pencil"/></svg>
+            </button>
+          </div>
+          <div class="sub" id="sub"></div>
+        </div>
+      </div>
+      <div class="vw-actions">
+        <label class="select-icon" id="compare-wrap" hidden>
+          <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#compare"/></svg>
+          <select id="compare" aria-label="Compare with another export" data-i18n-aria-label="viewerCompareLabel">
+            <option value="" data-i18n="viewerCompare">Compare with…</option>
+          </select>
+        </label>
+        <button type="button" id="download" class="ghost icon-only" title="Save file" aria-label="Save file" data-i18n-title="viewerSave" data-i18n-aria-label="viewerSave">
+          <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#download"/></svg>
+        </button>
+        <button type="button" id="copy-file" title="Saves the file to Downloads/peekload and copies its path — paste it into e.g. Claude Code" data-i18n-title="viewerCopyAsFileHint">
+          <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#file"/></svg>
+          <span data-i18n="viewerCopyAsFile">Save &amp; copy path</span>
+        </button>
+        <div class="btn-group">
+          <button type="button" id="copy" class="primary">
+            <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#copy"/></svg>
+            <span data-i18n="viewerCopy">Copy</span>
+          </button>
+          <select id="copy-format" class="primary" aria-label="Copy format" data-i18n-aria-label="viewerCopyFormat"></select>
+        </div>
+        <button type="button" id="close" class="ghost icon-only" title="Close" aria-label="Close" data-i18n-title="viewerClose" data-i18n-aria-label="viewerClose">
+          <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#x"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="vw-toolbar" id="toolbar">
+      <div class="seg" id="views" role="group" aria-label="View" data-i18n-aria-label="viewerViews"></div>
+      <div class="vw-search" id="filterbar" hidden>
+        <div class="field-icon">
+          <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#search"/></svg>
+          <input type="search" id="filter" autocomplete="off" spellcheck="false">
+        </div>
+        <span class="filter-info" id="filter-info" role="status"></span>
+        <button type="button" id="copy-result" class="sm" hidden>
+          <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#copy"/></svg>
+          <span data-i18n="viewerCopyResult">Copy result</span>
+        </button>
+      </div>
+      <div class="vw-diffbar" id="diffbar" hidden>
+        <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#compare"/></svg>
+        <span class="diff-info" id="diff-info"></span>
+        <label class="diff-sort" id="diff-sort-wrap">
+          <input type="checkbox" role="switch" class="switch" id="diff-sort" checked>
+          <span data-i18n="viewerIgnoreKeyOrder">ignore key order</span>
+        </label>
+        <button type="button" id="diff-close" class="sm"><span data-i18n="viewerEndCompare">End comparison</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner warn notice" id="notice" role="status" hidden></div>
+  <div class="vw-body">
+    <aside class="vw-sidebar" id="sidebar" aria-labelledby="sidebar-title" hidden>
+      <h2 id="sidebar-title" data-i18n="popupHistory">Recent exports</h2>
+      <ul class="history-list" id="sidebar-list"></ul>
+      <p class="sidebar-empty" id="sidebar-empty" data-i18n="popupHistoryEmpty" hidden>Exports you capture will appear here.</p>
+    </aside>
+    <!-- biome-ignore lint/a11y/noNoninteractiveTabindex: the scrollable preview must be keyboard-focusable -->
+    <main id="main" tabindex="0"></main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="viewer.js"></script>
+</body>
+</html>

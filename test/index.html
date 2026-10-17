@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Peekload — test page</title>
+  <style>
+    body { font: 15px/1.5 system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+    button, a.btn { display: block; margin: 8px 0; padding: 8px 12px; font: inherit; cursor: pointer; text-align: left; }
+    small { color: #777; }
+  </style>
+</head>
+<body>
+  <h1>Peekload test page</h1>
+  <p>Run <code>node test/server.mjs</code>, open <code>http://localhost:8080</code>,
+    enable the extension from the toolbar icon and click through the buttons.</p>
+
+  <h2>Exports generated in the browser</h2>
+  <button type="button" id="b1">1. Blob + detached &lt;a&gt;.click() <small>(most common pattern)</small></button>
+  <button type="button" id="b2">2. Blob + dispatchEvent(MouseEvent) <small>(styl FileSaver.js)</small></button>
+  <button type="button" id="b3">3. Blob without a type, .json name, immediate revokeObjectURL</button>
+  <button type="button" id="b4">4. data: URL (base64)</button>
+  <button type="button" id="b5">5. Blob text/plain with JSON content, .txt name <small>(detected by content)</small></button>
+  <!-- biome-ignore lint/a11y/useValidAnchor: href is set by the script when the page loads -->
+  <a class="btn" id="b6" download="in-dom.json">6. Link &lt;a download&gt; in the DOM — real click</a>
+  <button type="button" id="b7">7. CSV (<code>;</code>, non-ASCII characters, quoted field) — <b>downloads normally with the default formats (JSON only)</b></button>
+
+  <h2>Other formats <small>(enable them in the popup: CSV / TSV, XML, Text)</small></h2>
+  <button type="button" id="b10">10. TSV with tabs</button>
+  <button type="button" id="b11">11. XML (<code>application/xml</code>)</button>
+  <button type="button" id="b12">12. Text <code>.log</code></button>
+  <button type="button" id="b13">13. Blob <code>text/plain</code> with an <code>&lt;?xml</code> declaration <small>(XML detected by content)</small></button>
+  <button type="button" id="b14">14. PDF — <b>always downloads normally</b></button>
+
+  <h2>Server downloads</h2>
+  <a class="btn" href="sample.json" download>8. Same-origin <code>sample.json</code> with the download attribute</a>
+  <a class="btn" href="/api/export">9. <code>/api/export</code> — response with <code>Content-Disposition: attachment</code></a>
+  <a class="btn" href="/api/export.csv">15. <code>/api/export.csv</code> — CSV with <code>Content-Disposition: attachment</code></a>
+  <small>Items 9 and 15 only work when started with <code>node test/server.mjs</code>.</small>
+
+  <h2>History and comparison</h2>
+  <p>Click 1 a few times (the data contains a timestamp), then pick "Compare with…" in the preview. Recent exports are also
+    in the popup, and <kbd>Alt+Shift+J</kbd> opens the latest.</p>
+
+  <script>
+    const data = () => ({
+      generatedAt: new Date().toISOString(),
+      items: Array.from({ length: 5 }, (_, i) => ({ id: i + 1, name: `Item ${i + 1}`, active: i % 2 === 0, price: 9.99 * (i + 1) })),
+      meta: { source: 'test', nested: { ok: true, nothing: null } },
+    });
+    const json = () => JSON.stringify(data());
+
+    function blobDownload(text, type, name, { revokeNow = false, dispatch = false } = {}) {
+      const url = URL.createObjectURL(new Blob([text], type ? { type } : undefined));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      if (dispatch) a.dispatchEvent(new MouseEvent('click'));
+      else a.click();
+      if (revokeNow) URL.revokeObjectURL(url);
+      else setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    b1.onclick = () => blobDownload(json(), 'application/json', 'export-1.json');
+    b2.onclick = () => blobDownload(json(), 'application/json', 'export-2.json', { dispatch: true });
+    b3.onclick = () => blobDownload(json(), '', 'export-3.json', { revokeNow: true });
+    b4.onclick = () => {
+      const a = document.createElement('a');
+      a.href = `data:application/json;base64,${btoa(unescape(encodeURIComponent(json())))}`;
+      a.download = 'export-4.json';
+      a.click();
+    };
+    b5.onclick = () => blobDownload(json(), 'text/plain', 'export-5.txt');
+    b6.href = URL.createObjectURL(new Blob([json()], { type: 'application/json' }));
+    b7.onclick = () =>
+      blobDownload('id;name;amount\n1;Zażółć;1,50\n2;"Second; with ""quotes""";2,75\n', 'text/csv', 'export.csv');
+    b10.onclick = () => blobDownload('id\tname\tprice\n1\tAlfa\t9.99\n2\tBeta\t19.98\n', 'text/tab-separated-values', 'export.tsv');
+    b11.onclick = () =>
+      blobDownload(
+        '<?xml version="1.0" encoding="UTF-8"?><orders><order id="1"><customer>Jan</customer><amount currency="PLN">12.50</amount></order><!-- end --></orders>',
+        'application/xml',
+        'export.xml',
+      );
+    b12.onclick = () => blobDownload(`[${new Date().toISOString()}] INFO start\n[…] WARN something\n`, 'text/plain', 'app.log');
+    b13.onclick = () => blobDownload('<?xml version="1.0"?><a><b>1</b></a>', 'text/plain', 'data.txt');
+    b14.onclick = () => blobDownload('%PDF-1.4 fake', 'application/pdf', 'invoice.pdf');
+  </script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+{
+  "source": "server",
+  "items": [{ "id": 1, "name": "Z serwera", "qty": 3 }, { "id": 2, "name": "Druga pozycja", "qty": 1 }]
+}

@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.json",
+  // Tests stub chrome.* and drive jsdom, so they are checked without strict mode.
+  "compilerOptions": { "types": ["chrome", "node"], "strict": false, "noUncheckedIndexedAccess": false },
+  "include": ["."]
+}

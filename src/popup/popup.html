@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Peekload</title>
+  <link rel="stylesheet" href="../shared/ui.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body class="preload">
+  <header class="pp-header">
+    <img src="../icons/icon32.png" width="20" height="20" alt="">
+    <span class="pp-title">Peekload</span>
+    <button type="button" id="options" class="ghost icon-only sm" title="Settings" aria-label="Settings" data-i18n-title="popupSettingsLink" data-i18n-aria-label="popupSettingsLink">
+      <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#settings"/></svg>
+    </button>
+  </header>
+
+  <main class="pp-main">
+    <section class="card site-card" id="site-card">
+      <div class="site-row">
+        <span class="site-icon" id="site-icon"><svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#globe"/></svg></span>
+        <div class="site-info">
+          <div class="site-host" id="site">…</div>
+          <div class="site-status" id="status"></div>
+        </div>
+        <input type="checkbox" role="switch" class="switch" id="toggle" disabled
+          aria-label="Capture exports on this site" data-i18n-aria-label="popupToggle">
+      </div>
+      <div class="site-formats" id="formats" hidden>
+        <div class="site-formats-label" id="formats-label">Captured formats</div>
+        <div id="formats-picker"></div>
+      </div>
+    </section>
+
+    <div class="banner" id="note" role="status" hidden>
+      <svg class="icon" id="note-icon" aria-hidden="true"><use href="../shared/icons.svg#check"/></svg>
+      <span id="note-text"></span>
+      <button type="button" id="reload" class="sm" hidden><span data-i18n="popupReloadTab">Reload tab</span></button>
+    </div>
+
+    <section class="history" id="history">
+      <div class="section-head">
+        <h2 data-i18n="popupHistory">Recent exports</h2>
+        <span class="shortcut" id="shortcut"></span>
+      </div>
+      <ul class="history-list" id="history-list"></ul>
+      <div class="empty-state" id="history-empty" hidden>
+        <svg class="icon" aria-hidden="true"><use href="../shared/icons.svg#inbox"/></svg>
+        <span data-i18n="popupHistoryEmpty">Captured exports will appear here.</span>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
