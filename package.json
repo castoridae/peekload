@@ -14,7 +14,8 @@
     "test": "node --test test/*.test.ts",
     "check": "pnpm lint && pnpm typecheck && pnpm test",
     "serve": "node test/server.ts",
-    "zip": "pnpm build && node scripts/zip.mjs"
+    "zip": "pnpm build && node scripts/zip.mjs",
+    "release": "node scripts/release.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.3",

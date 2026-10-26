@@ -102,6 +102,7 @@ pnpm format     # apply Biome formatting and safe fixes
 pnpm test       # capture tests (jsdom), site/format helpers, preview modules, translations
 pnpm serve      # test page at http://localhost:8080
 pnpm zip        # build and pack release/peekload-<version>.zip for the Chrome Web Store
+pnpm release patch  # check, bump version (patch|minor|major|x.y.z), build and pack the zip
 ```
 
 The source is TypeScript in `src/`, bundled with esbuild (type checking is `tsc --noEmit`). Static files
