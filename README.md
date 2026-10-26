@@ -117,6 +117,10 @@ Nothing leaves your browser. Captured exports are kept in `chrome.storage.sessio
 closes, and only the 10 most recent are kept (fewer if they are large: the limit is about 10 MB in total, oldest
 removed first). Host permissions are optional and granted separately for each site you enable.
 
+## Support
+
+Peekload is free. If it saves you time, you can [buy me a coffee](https://ko-fi.com/castoridae).
+
 ## License
 
 MIT with the [Commons Clause](https://commonsclause.com): free to use (including at work), modify and fork,

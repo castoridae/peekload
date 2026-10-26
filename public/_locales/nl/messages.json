@@ -144,5 +144,6 @@
   "optionsShortcutNone": { "message": "Niet ingesteld" },
   "optionsWildcard": { "message": "incl. subdomeinen" },
   "optionsPrivacy": { "message": "Alles blijft in je browser — exports worden nergens naartoe gestuurd." },
-  "optionsVersion": { "message": "Versie $1" }
+  "optionsVersion": { "message": "Versie $1" },
+  "optionsSupport": { "message": "Steun het project" }
 }

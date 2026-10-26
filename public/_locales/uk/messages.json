@@ -154,5 +154,6 @@
   "optionsShortcutNone": { "message": "Не задано" },
   "optionsWildcard": { "message": "з піддоменами" },
   "optionsPrivacy": { "message": "Усе залишається у вашому браузері — експорти нікуди не надсилаються." },
-  "optionsVersion": { "message": "Версія $1" }
+  "optionsVersion": { "message": "Версія $1" },
+  "optionsSupport": { "message": "Підтримати проєкт" }
 }

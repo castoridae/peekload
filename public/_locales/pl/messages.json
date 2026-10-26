@@ -154,5 +154,6 @@
   "optionsShortcutNone": { "message": "Nie ustawiono" },
   "optionsWildcard": { "message": "z subdomenami" },
   "optionsPrivacy": { "message": "Wszystko zostaje w Twojej przeglądarce — eksporty nigdzie nie są wysyłane." },
-  "optionsVersion": { "message": "Wersja $1" }
+  "optionsVersion": { "message": "Wersja $1" },
+  "optionsSupport": { "message": "Wesprzyj projekt" }
 }
